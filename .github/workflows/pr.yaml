@@ -1,0 +1,17 @@
+name: Pull Request Flow
+
+on:
+  - pull_request
+
+jobs:
+  notify:
+    name: Notify snapshot update
+    runs-on: ubuntu-latest
+    steps:
+      - name: comment PR
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_BRANCH: ${{ github.base_ref }}
+        with:
+          msg: "Check out this message! $BASE_BRANCH\nPlease run the following command at your repository\n```\nscripts/update-test-files --opam satyrographos-repo-test-develop.opam --all\n```"
